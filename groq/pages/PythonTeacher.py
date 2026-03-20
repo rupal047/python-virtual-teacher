@@ -91,15 +91,8 @@ if "messages" not in st.session_state:
         }
     ] + history
 
-for msg in st.session_state.messages:
-    if msg["role"] != "system":
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-
-st.divider()
-
 # ════════════════════════════
-#   INPUT BAR — Text + Mic
+#   INPUT BAR — Text + Mic (moved to top)
 # ════════════════════════════
 if "show_voice" not in st.session_state:
     st.session_state.show_voice = False
@@ -115,12 +108,12 @@ with col_mic:
         st.session_state.show_voice = not st.session_state.show_voice
         st.rerun()
 
-# Handle text input
+# Handle text input (top)
 if prompt:
     handle_prompt(prompt)
 
 # ════════════════════════════
-#   VOICE RECORDER
+#   VOICE RECORDER (moved to top)
 # ════════════════════════════
 if st.session_state.show_voice:
     st.info("🎤 Recording mode ON — speak your Python question below")
@@ -147,9 +140,11 @@ if st.session_state.show_voice:
         st.session_state.show_voice = False
         handle_prompt(voice_prompt)
 
-# ════════════════════════════
-#   CLEAR CHAT
-# ════════════════════════════
+for msg in st.session_state.messages:
+    if msg["role"] != "system":
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
 st.divider()
 if st.button("🗑️ Clear Chat"):
     clear_chat_history(st.session_state.username)
