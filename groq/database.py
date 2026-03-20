@@ -128,10 +128,10 @@
 
 from pymongo import MongoClient
 from datetime import datetime
-import os
+import streamlit as st
 
 # ── MongoDB Connection ──
-MONGO_URI = os.environ["MONGO_URI"]
+MONGO_URI = st.secrets["MONGO_URI"]
 
 client = MongoClient(MONGO_URI)
 db = client["python_chatbot"]

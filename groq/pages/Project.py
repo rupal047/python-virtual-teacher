@@ -1,7 +1,6 @@
 # pages/4_Projects.py
 
 import streamlit as st
-import os
 from groq import Groq
 from datetime import datetime
 
@@ -15,7 +14,7 @@ if "logged_in" not in st.session_state or not st.session_state.logged_in:
     st.stop()
 
 # ── Groq Client ──
-client = Groq(api_key=os.environ["GROQ_API_KEY"])
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # ── Sidebar ──
 with st.sidebar:
