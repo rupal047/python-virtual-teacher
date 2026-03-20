@@ -3,5 +3,6 @@ groq
 gtts
 pymongo
 bcrypt
-streamlit-cookies-manager
 dnspython
+plotly
+pandas
