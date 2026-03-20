@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from groq import Groq
 import gtts
 from io import BytesIO
@@ -16,7 +17,7 @@ if "logged_in" not in st.session_state or not st.session_state.logged_in:
     st.stop()
 
 # ── Groq Client ──
-client = Groq(api_key="")
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 # ── Sidebar ──
 with st.sidebar:
@@ -56,13 +57,11 @@ def get_llm_reply(messages: list) -> str:
 
 
 def handle_prompt(prompt: str):
-
-    # Save and show user message
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    save_chat(st.session_state.username, "user", prompt)
-
-    with st.chat_message("user"):
-        st.markdown(prompt)
+     
+    if "python" not in prompt.lower():
+        with st.chat_message("assistant"):
+            st.warning("🚫 I only answer Python-related questions!")
+        return
 
     # Save and show user message
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -88,7 +87,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "system",
-            "content": "You are an expert Python developer and teacher. Always answer in Python by default unless the user explicitly mentions another language. If the user asks to write code, write it in Python. Be clear, concise and beginner-friendly."
+            "content": "You are an expert Python developer. Answer ONLY Python-related questions. Be clear and concise."
         }
     ] + history
 
