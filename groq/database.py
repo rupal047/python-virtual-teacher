@@ -128,9 +128,10 @@
 
 from pymongo import MongoClient
 from datetime import datetime
+import os
 
 # ── MongoDB Connection ──
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = os.environ["MONGO_URI"]
 
 client = MongoClient(MONGO_URI)
 db = client["python_chatbot"]

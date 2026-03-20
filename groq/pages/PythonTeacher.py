@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from groq import Groq
 import gtts
 from io import BytesIO
@@ -16,7 +17,7 @@ if "logged_in" not in st.session_state or not st.session_state.logged_in:
     st.stop()
 
 # ── Groq Client ──
-client = Groq(api_key="")
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 # ── Sidebar ──
 with st.sidebar:
